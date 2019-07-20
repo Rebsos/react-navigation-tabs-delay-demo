@@ -1,0 +1,3 @@
+rootProject.name = 'react_navigation_tabs_tab_delay'
+
+include ':app'
