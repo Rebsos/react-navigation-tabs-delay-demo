@@ -1,49 +1,64 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
+import React from 'react';
+import 'react-native-gesture-handler';
+import { View, Text, } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import { TabView, SceneMap } from 'react-native-tab-view';
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+const tab1Route = () => <View style={{ flex: 1, backgroundColor: 'red' }} />;
+const tab2Route = () => <View style={{ flex: 1, backgroundColor: 'blue' }} />;
+const tab3Route = () => <View style={{ flex: 1, backgroundColor: 'yellow' }} />;
+const tab4Route = () => <View style={{ flex: 1, backgroundColor: 'green' }} />;
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
-type Props = {};
-export default class App extends Component<Props> {
+class ReactNativeTabView extends React.Component {
+  state = {
+    index: 0,
+    routes: [
+      { key: 'tab1', title: 'tab1' },
+      { key: 'tab2', title: 'tab2' },
+      { key: 'tab3', title: 'tab3' },
+      { key: 'tab4', title: 'tab4' },
+    ],
+  };
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <TabView
+        navigationState={this.state}
+        renderScene={SceneMap({
+          tab1: tab1Route,
+          tab2: tab2Route,
+          tab3: tab3Route,
+          tab4: tab4Route,
+        })}
+        onIndexChange={index => this.setState({ index })}
+      />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+const ReactNavigationTabs = createMaterialTopTabNavigator({
+  tab1: { screen: tab1Route },
+  tab2: { screen: tab2Route },
+  tab3: { screen: tab3Route },
+  tab4: { screen: tab4Route },
 });
+
+const ReactNavigation = createAppContainer(ReactNavigationTabs);
+
+const App = () => {
+  console.log('App.js');
+  return (
+    <View style={{flex: 1}}>
+      <View style={{flex: 1}}>
+        <Text>React Native Tab View 2.9.0</Text>
+        <ReactNativeTabView/>
+      </View>
+      <View style={{flex: 1}}>
+      <Text>React Navigation Tabs 2.2.0</Text>
+        <ReactNavigation/>
+      </View>
+    </View>
+  );
+}
+
+export default App;
