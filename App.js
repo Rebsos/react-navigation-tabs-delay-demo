@@ -54,7 +54,7 @@ const App = () => {
         <ReactNativeTabView/>
       </View>
       <View style={{flex: 1}}>
-      <Text>React Navigation Tabs 2.2.0</Text>
+      <Text>React Navigation Tabs 2.3.0</Text>
         <ReactNavigation/>
       </View>
     </View>
